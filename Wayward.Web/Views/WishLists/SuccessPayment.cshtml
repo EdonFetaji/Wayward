@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Payment Successful";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="card border-0 shadow-lg">
+                <div class="card-header bg-success text-white text-center py-3">
+                    <h4 class="fw-bold mb-0">Payment Successful</h4>
+                </div>
+
+                <div class="card-body p-4 text-center">
+                    <div class="d-inline-flex align-items-center justify-content-center rounded-circle bg-success bg-opacity-10 text-success mb-3" style="width:64px;height:64px;">
+                        <span class="fs-3">✓</span>
+                    </div>
+
+                    <h5 class="mb-2">Thank you! Your payment has been confirmed.</h5>
+                    <p class="text-muted mb-4">
+                        We’re finalizing your bookings now.
+                    </p>
+
+                    @if (TempData["Msg"] != null)
+                    {
+                        <div class="alert alert-info text-start mx-auto" style="max-width: 560px;">
+                            @TempData["Msg"]
+                        </div>
+                    }
+
+                    <div class="d-flex flex-wrap justify-content-center gap-2 mt-2">
+                        <a asp-controller="WishLists" asp-action="Index" class="btn btn-success">
+                            View My Wishlist
+                        </a>
+                        <a asp-controller="Flights" asp-action="Index" class="btn btn-outline-secondary">
+                            Browse More Flights
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card-footer bg-light text-center small text-muted py-3">
+                    A receipt has been generated in Stripe (test mode).
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

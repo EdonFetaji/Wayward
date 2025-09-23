@@ -1,0 +1,60 @@
+﻿@{
+    ViewData["Title"] = "Payment Failed";
+    // Optional: if the controller sets ViewBag.FlightId, we show a "Back to flight" button.
+    var flightId = ViewBag.FlightId as Guid?;
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="card shadow-sm border-0">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="bg-danger-subtle text-danger rounded-circle d-inline-flex align-items-center justify-content-center me-3" style="width:48px;height:48px;">
+                            <span class="fw-bold fs-4">!</span>
+                        </div>
+                        <div>
+                            <h3 class="mb-0">Payment unsuccessful</h3>
+                            <small class="text-muted">Your card wasn’t charged.</small>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-danger" role="alert">
+                        We couldn’t confirm your payment. This can happen if the bank declines the charge,
+                        3-D Secure verification fails, or the session expired.
+                    </div>
+
+                    <ul class="mb-4">
+                        <li>Check your card details and try again.</li>
+                        <li>Use another card</li>
+                        <li>If this keeps happening, try a different browser or network.</li>
+                    </ul>
+
+                    <div class="d-flex gap-2">
+                        @if (flightId.HasValue)
+                        {
+                            <a asp-action="Details" asp-route-id="@flightId.Value" class="btn btn-primary">
+                                Try again
+                            </a>
+                        }
+                        else
+                        {
+                            <a asp-action="Index" class="btn btn-primary">
+                                Back to flights
+                            </a>
+                        }
+                        <a asp-action="Index" class="btn btn-outline-secondary">Home</a>
+                    </div>
+                </div>
+
+                <div class="card-footer bg-light text-muted small">
+                    Need help? Contact support or try again later.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <!-- No extra scripts needed -->
+}

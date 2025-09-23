@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- https://go.microsoft.com/fwlink/?LinkID=208121. -->
+<Project>
+  <PropertyGroup>
+    <EncryptedPassword>AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAApgcoxCC96kKAt/mBN9n56QAAAAACAAAAAAAQZgAAAAEAACAAAADGfKWn6mybsiY3IBKTCUIGVwoC3MQ6uv+VbTsGMNclKAAAAAAOgAAAAAIAACAAAABX9vIbRtpSqabewTQgkcPTJNRluHXJ6S3zmqs3kk51ACAAAAC8sppkXOcfVBMSEtFMtndvM0ifLtE8F+Jbr4Ns1RAGcUAAAAB6jiZa7fmO7nfyeoiaIdIvQMIJfX/UtXi1IBKEh/0nrgp6X7PAeswvsgaL4G4bhNUM71NhAF0yoarUROVrXIdU</EncryptedPassword>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <History>False|2025-09-23T16:46:25.0119813Z||;False|2025-09-23T18:33:50.4692321+02:00||;</History>
+    <LastFailureDetails>2025-09-23T16:46:25.0119813Z|checkContainerPrereq</LastFailureDetails>
+  </PropertyGroup>
+</Project>

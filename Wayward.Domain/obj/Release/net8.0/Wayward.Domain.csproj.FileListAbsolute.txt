@@ -1,0 +1,12 @@
+C:\Users\Edon Fetaji\Desktop\WayWard\Wayward.Domain\bin\Release\net8.0\Wayward.Domain.deps.json
+C:\Users\Edon Fetaji\Desktop\WayWard\Wayward.Domain\bin\Release\net8.0\Wayward.Domain.dll
+C:\Users\Edon Fetaji\Desktop\WayWard\Wayward.Domain\bin\Release\net8.0\Wayward.Domain.pdb
+C:\Users\Edon Fetaji\Desktop\WayWard\Wayward.Domain\obj\Release\net8.0\Wayward.Domain.csproj.AssemblyReference.cache
+C:\Users\Edon Fetaji\Desktop\WayWard\Wayward.Domain\obj\Release\net8.0\Wayward.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Edon Fetaji\Desktop\WayWard\Wayward.Domain\obj\Release\net8.0\Wayward.Domain.AssemblyInfoInputs.cache
+C:\Users\Edon Fetaji\Desktop\WayWard\Wayward.Domain\obj\Release\net8.0\Wayward.Domain.AssemblyInfo.cs
+C:\Users\Edon Fetaji\Desktop\WayWard\Wayward.Domain\obj\Release\net8.0\Wayward.Domain.csproj.CoreCompileInputs.cache
+C:\Users\Edon Fetaji\Desktop\WayWard\Wayward.Domain\obj\Release\net8.0\Wayward.Domain.dll
+C:\Users\Edon Fetaji\Desktop\WayWard\Wayward.Domain\obj\Release\net8.0\refint\Wayward.Domain.dll
+C:\Users\Edon Fetaji\Desktop\WayWard\Wayward.Domain\obj\Release\net8.0\Wayward.Domain.pdb
+C:\Users\Edon Fetaji\Desktop\WayWard\Wayward.Domain\obj\Release\net8.0\ref\Wayward.Domain.dll

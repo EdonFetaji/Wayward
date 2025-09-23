@@ -1,0 +1,362 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Wayward — Book smarter flights</title>
+
+    <style>
+        /* Minimal custom styles to echo the clean reference look */
+        :root {
+            --wwd-border: #eef0f3;
+        }
+
+        .hero {
+            background: radial-gradient(1200px 600px at 10% 10%, rgba(0,0,0,.06), transparent), linear-gradient(180deg, #f8f9fb 0%, #ffffff 100%);
+            padding: 5rem 0 4rem;
+        }
+
+        .value-card {
+            border: 1px solid var(--wwd-border);
+            border-radius: .75rem;
+        }
+
+            .value-card:hover {
+                border-color: #dfe3e8;
+                transform: translateY(-2px);
+                transition: .2s;
+            }
+
+        .deal-card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: .5rem;
+            background: #f3f5f7;
+        }
+
+        .tile {
+            border: 1px solid var(--wwd-border);
+            border-radius: .75rem;
+            padding: 1.25rem;
+            height: 100%;
+        }
+
+            .tile:hover {
+                border-color: #dfe3e8;
+                background: #fafbfc;
+            }
+
+        .quote {
+            background: #f8f9fb;
+            border: 1px solid var(--wwd-border);
+            border-radius: .75rem;
+            padding: 1.25rem;
+        }
+
+        .section-title {
+            letter-spacing: -.3px;
+        }
+
+        .link-arrow::after {
+            content: " →";
+            transition: transform .2s;
+            display: inline-block;
+        }
+
+        .link-arrow:hover::after {
+            transform: translateX(3px);
+        }
+
+        .integration-logo {
+            height: 28px;
+            opacity: .8;
+        }
+
+        .search-card {
+            box-shadow: 0 8px 28px rgba(0,0,0,.06);
+        }
+    </style>
+</head>
+<body>
+
+
+    <!-- HERO -->
+    <section class="hero" id="search">
+        <div class="container">
+            <div class="row align-items-center gy-4">
+                <div class="col-lg-7">
+                    <div class="mb-2 text-uppercase text-primary fw-semibold">SMART FLIGHT BOOKING</div>
+                    <h1 class="display-5 fw-bold mb-3">Find deals. Pick seats. Fly happy.</h1>
+                    <p class="lead text-secondary mb-4">
+                        Wayward searches Amadeus for live fares, lets you save favorites, choose seats, and check out with Stripe.
+                        You’ll get a confirmation email and a neat PDF boarding pass.
+                    </p>
+                    <div class="d-flex gap-3">
+                        <a class="btn btn-primary" asp-action="Index" asp-controller="Flights">See live deals</a>
+                        <a class="btn btn-outline-secondary" href="#how">How it works</a>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <img src="https://img.freepik.com/premium-photo/airplane-tail-sky-with-white-clouds-background_2831-361.jpg" style="width:500px"alt="hero image" />
+                </div>
+                </div>
+                
+            <!-- Integrations strip -->
+            <div class="row mt-4 g-3 align-items-center">
+                <div class="col-auto small text-secondary">Integrates with</div>
+                <div class="col-auto"><img class="integration-logo" src="https://placehold.co/120x28?text=Amadeus" alt="Amadeus"></div>
+                <div class="col-auto"><img class="integration-logo" src="https://placehold.co/90x28?text=Stripe" alt="Stripe"></div>
+                <div class="col-auto"><img class="integration-logo" src="https://placehold.co/90x28?text=Gmail" alt="Gmail"></div>
+                <div class="col-auto"><img class="integration-logo" src="https://placehold.co/120x28?text=QuestPDF" alt="QuestPDF"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VALUE STRIP -->
+    <section class="py-5" id="why">
+        <div class="container">
+            <h2 class="h3 section-title mb-4">Why travelers choose Wayward</h2>
+            <div class="row g-3">
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="p-3 value-card h-100">
+                        <h3 class="h5 mb-2">Live deals</h3>
+                        <p class="mb-0 text-secondary">Search real fares and availability with Amadeus.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="p-3 value-card h-100">
+                        <h3 class="h5 mb-2">Save & compare</h3>
+                        <p class="mb-0 text-secondary">Add flights to your wishlist and decide later.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="p-3 value-card h-100">
+                        <h3 class="h5 mb-2">Seat picker</h3>
+                        <p class="mb-0 text-secondary">Choose seats visually before paying.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <div class="p-3 value-card h-100">
+                        <h3 class="h5 mb-2">Secure checkout</h3>
+                        <p class="mb-0 text-secondary">Stripe payments with instant email confirmation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TOP DEALS / DISCOVERY GRID -->
+    <section class="py-5 bg-light" id="deals">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-end flex-wrap gap-2 mb-3">
+                <h2 class="h3 section-title mb-0">Previous popular deals</h2>
+                <a class="text-decoration-none link-arrow" href="#">View all</a>
+            </div>
+            <div class="row g-4">
+                <!-- Deal card -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <a class="text-decoration-none text-dark" href="#">
+                        <div class="card deal-card h-100 border-0 shadow-sm">
+                            <img src="https://placehold.co/600x360?text=SKP%E2%86%92MXP" alt="Skopje to Milan">
+                            <div class="card-body">
+                                <h3 class="h5 mb-1">Skopje → Milan</h3>
+                                <p class="text-secondary mb-2">Round-trip · 3–6 days · Economy</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-semibold">€79</span>
+                                    <span class="small text-secondary">via Amadeus</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <a class="text-decoration-none text-dark" href="#">
+                        <div class="card deal-card h-100 border-0 shadow-sm">
+                            <img src="https://placehold.co/600x360?text=SKP%E2%86%92IST" alt="Skopje to Istanbul">
+                            <div class="card-body">
+                                <h3 class="h5 mb-1">Skopje → Istanbul</h3>
+                                <p class="text-secondary mb-2">Weekend · 2–4 days · Economy</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-semibold">€92</span>
+                                    <span class="small text-secondary">via Amadeus</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-12 col-md-6 col-lg-4">
+                    <a class="text-decoration-none text-dark" href="#">
+                        <div class="card deal-card h-100 border-0 shadow-sm">
+                            <img src="https://placehold.co/600x360?text=SKP%E2%86%92FRA" alt="Skopje to Frankfurt">
+                            <div class="card-body">
+                                <h3 class="h5 mb-1">Skopje → Frankfurt</h3>
+                                <p class="text-secondary mb-2">Business-friendly · 1–3 days</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="fw-semibold">€129</span>
+                                    <span class="small text-secondary">via Amadeus</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div class="container">
+            <h2 class="h3 section-title mb-4">Explore by theme</h2>
+            <div class="row g-3">
+                <div class="col-12 col-md-6 col-lg-3">
+                    <a class="text-decoration-none text-dark" href="#">
+                        <div class="tile h-100">
+                            <h3 class="h5 mb-2">City breaks</h3>
+                            <p class="text-secondary mb-0">48-hour escapes to Europe’s classics.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <a class="text-decoration-none text-dark" href="#">
+                        <div class="tile h-100">
+                            <h3 class="h5 mb-2">Beach & sun</h3>
+                            <p class="text-secondary mb-0">Direct flights to sand and sea.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <a class="text-decoration-none text-dark" href="#">
+                        <div class="tile h-100">
+                            <h3 class="h5 mb-2">Work trips</h3>
+                            <p class="text-secondary mb-0">Early returns, cabin upgrades, invoices.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <a class="text-decoration-none text-dark" href="#">
+                        <div class="tile h-100">
+                            <h3 class="h5 mb-2">Family travel</h3>
+                            <p class="text-secondary mb-0">Seats together and flexible rules.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS -->
+    <section class="py-5 bg-gradient" id="how">
+        <div class="container">
+            <h2 class="h3 section-title mb-4">How Wayward works</h2>
+            <div class="row g-4">
+                <div class="col-12 col-lg-3">
+                    <div class="tile h-100">
+                        <div class="small text-secondary mb-1">Step 1</div>
+                        <h3 class="h6">Search Amadeus</h3>
+                        <p class="mb-0 text-secondary">Live fares & routes from global carriers.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-3">
+                    <div class="tile h-100">
+                        <div class="small text-secondary mb-1">Step 2</div>
+                        <h3 class="h6">Save favorites</h3>
+                        <p class="mb-0 text-secondary">Build a wishlist and compare options.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-3">
+                    <div class="tile h-100">
+                        <div class="small text-secondary mb-1">Step 3</div>
+                        <h3 class="h6">Pick seats</h3>
+                        <p class="mb-0 text-secondary">Window, aisle, or together — your call.</p>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-3">
+                    <div class="tile h-100">
+                        <div class="small text-secondary mb-1">Step 4</div>
+                        <h3 class="h6">Pay & receive docs</h3>
+                        <p class="mb-0 text-secondary">Stripe checkout, Gmail confirmation, PDF boarding pass.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="h3 section-title mb-4">Travelers ❤️ Wayward</h2>
+            <div class="row g-4">
+                <div class="col-12 col-lg-4">
+                    <div class="quote h-100">
+                        <p class="mb-2">“Seat selection before payment is a game-changer. Fast, clear, done.”</p>
+                        <div class="small text-secondary">Ana K. — Frequent flyer</div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4">
+                    <div class="quote h-100">
+                        <p class="mb-2">“I save deals to my wishlist and book when the price is right.”</p>
+                        <div class="small text-secondary">Boris T. — Weekend traveler</div>
+                    </div>
+                </div>
+                <div class="col-12 col-lg-4">
+                    <div class="quote h-100">
+                        <p class="mb-2">“Stripe checkout felt secure and the PDF pass arrived instantly.”</p>
+                        <div class="small text-secondary">Lea P. — Business traveler</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEWS / UPDATES -->
+    <section class="py-5 bg-light" id="news">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-end flex-wrap gap-2 mb-3">
+                <h2 class="h3 section-title mb-0">Latest updates</h2>
+                <a class="text-decoration-none link-arrow" href="#">All updates</a>
+            </div>
+            <div class="row g-4">
+                <div class="col-12 col-lg-4">
+                    <a class="text-decoration-none text-dark" href="#">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="small text-secondary">Aug 2025</div>
+                                <h3 class="h5 mt-1 mb-2">Seat map revamp</h3>
+                                <p class="text-secondary mb-0">Faster loading and window/aisle filters.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-lg-4">
+                    <a class="text-decoration-none text-dark" href="#">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="small text-secondary">Jul 2025</div>
+                                <h3 class="h5 mt-1 mb-2">Wishlist price alerts</h3>
+                                <p class="text-secondary mb-0">Get notified when saved flights drop.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-12 col-lg-4">
+                    <a class="text-decoration-none text-dark" href="#">
+                        <div class="card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <div class="small text-secondary">May 2025</div>
+                                <h3 class="h5 mt-1 mb-2">Stripe SCA improvements</h3>
+                                <p class="text-secondary mb-0">Smoother authentication for cards.</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+﻿@model Wayward.Domain.DomainModels.Booking
+
+@{
+    ViewData["Title"] = "Booking Details";
+
+    var flights = Model?.BookedFlights?.ToList() ?? new List<Wayward.Domain.DomainModels.BookedFlight>();
+    decimal totalPrice = flights
+        .Where(bf => bf?.Flight != null)
+        .Sum(bf => (decimal)(bf.Flight.Price)); 
+    var ownerDisplay = Model?.Owner?.UserName ?? Model?.Owner?.Email ?? Model?.OwnerId ?? "(unknown)";
+}
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="mb-0">Booking Details</h2>
+        <div class="btn-group">
+            <a asp-action="PrintBoardingPass" asp-route-id="@Model?.Id" class="btn btn-outline-secondary">Downlaod the Boarding pass</a>
+            <a asp-action="Index" class="btn btn-outline-primary">Back to List</a>
+        </div>
+    </div>
+
+    <!-- Booking summary -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-header bg-primary text-white">Summary</div>
+        <div class="card-body">
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div class="text-muted">Booking ID</div>
+                    <div class="text-monospace">@Model?.Id</div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-muted">Owner</div>
+                    <div>@ownerDisplay</div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-muted">Flights Count</div>
+                    <div><span class="badge bg-secondary">@flights.Count</span></div>
+                </div>
+                <div class="col-md-6">
+                    <div class="text-muted">Total Price</div>
+                    <div class="fs-5">@totalPrice</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-light">Booked Flights</div>
+        <div class="card-body">
+            @if (!flights.Any())
+            {
+                <div class="alert alert-info mb-0">No flights booked in this booking.</div>
+            }
+            else
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Airline</th>
+                                <th>Route</th>
+                                <th>Departure Date</th>
+                                <th>Class</th>
+                                <th>Price</th>
+                                <th>Seat</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var bf in flights)
+                            {
+                                var f = bf.Flight;
+                                <tr>
+                                    <td>@f?.AirlineName</td>
+                                    <td>@f?.FlightDeparture → @f?.FlightDestination</td>
+                                    <td>@(f?.DateDeparture.ToString("yyyy-MM-dd"))</td>
+                                    <td>@f?.Class</td>
+                                    <td>@f?.Price EUR</td>
+                                    <td>@(bf.Seat?.SeatNumber.ToString() ?? "—")</td>
+                                </tr>
+                            }
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colspan="4" class="text-end">Total</th>
+                                <th>@totalPrice EUR</th>
+                                <th></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

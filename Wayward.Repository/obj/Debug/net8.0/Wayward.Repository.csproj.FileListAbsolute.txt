@@ -1,0 +1,15 @@
+C:\Users\Edon Fetaji\Desktop\Wayward\Wayward.Repository\bin\Debug\net8.0\Wayward.Repository.deps.json
+C:\Users\Edon Fetaji\Desktop\Wayward\Wayward.Repository\bin\Debug\net8.0\Wayward.Repository.dll
+C:\Users\Edon Fetaji\Desktop\Wayward\Wayward.Repository\bin\Debug\net8.0\Wayward.Repository.pdb
+C:\Users\Edon Fetaji\Desktop\Wayward\Wayward.Repository\bin\Debug\net8.0\Wayward.Domain.dll
+C:\Users\Edon Fetaji\Desktop\Wayward\Wayward.Repository\bin\Debug\net8.0\Wayward.Domain.pdb
+C:\Users\Edon Fetaji\Desktop\Wayward\Wayward.Repository\obj\Debug\net8.0\Wayward.Repository.csproj.AssemblyReference.cache
+C:\Users\Edon Fetaji\Desktop\Wayward\Wayward.Repository\obj\Debug\net8.0\Wayward.Repository.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Edon Fetaji\Desktop\Wayward\Wayward.Repository\obj\Debug\net8.0\Wayward.Repository.AssemblyInfoInputs.cache
+C:\Users\Edon Fetaji\Desktop\Wayward\Wayward.Repository\obj\Debug\net8.0\Wayward.Repository.AssemblyInfo.cs
+C:\Users\Edon Fetaji\Desktop\Wayward\Wayward.Repository\obj\Debug\net8.0\Wayward.Repository.csproj.CoreCompileInputs.cache
+C:\Users\Edon Fetaji\Desktop\Wayward\Wayward.Repository\obj\Debug\net8.0\Wayward..BE9E31A3.Up2Date
+C:\Users\Edon Fetaji\Desktop\Wayward\Wayward.Repository\obj\Debug\net8.0\Wayward.Repository.dll
+C:\Users\Edon Fetaji\Desktop\Wayward\Wayward.Repository\obj\Debug\net8.0\refint\Wayward.Repository.dll
+C:\Users\Edon Fetaji\Desktop\Wayward\Wayward.Repository\obj\Debug\net8.0\Wayward.Repository.pdb
+C:\Users\Edon Fetaji\Desktop\Wayward\Wayward.Repository\obj\Debug\net8.0\ref\Wayward.Repository.dll

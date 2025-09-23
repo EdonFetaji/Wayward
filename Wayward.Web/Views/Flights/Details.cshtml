@@ -1,0 +1,63 @@
+﻿@model Wayward.Domain.DomainModels.Flight
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="h3 mb-3">Flight Details</h1>
+
+<div class="card shadow-sm m-auto" style="width: 75%;">
+    <div class="card-body row">
+        <div class="d-flex justify-content-between align-items-start mb-2 w-75 m-auto">
+            <span class="badge text-bg-primary">@Model.AirlineName</span>
+            <span class="badge text-warning font-monospace border">@Model.Class</span>
+        </div>
+
+        <h2 class="h5 mb-3 text-center">
+            @Model.FlightDeparture
+            <span class="text-secondary">→</span>
+            @Model.FlightDestination
+        </h2>
+
+        <ul class="list-group list-group-flush mb-3 w-50 m-auto">
+            <li class="list-group-item px-0 d-flex justify-content-between">
+                <span class="text-secondary">Airline</span>
+                <span class="fw-semibold">@Model.AirlineName</span>
+            </li>
+            <li class="list-group-item px-0 d-flex justify-content-between">
+                <span class="text-secondary">From</span>
+                <span class="fw-semibold">@Model.FlightDeparture</span>
+            </li>
+            <li class="list-group-item px-0 d-flex justify-content-between">
+                <span class="text-secondary">To</span>
+                <span class="fw-semibold">@Model.FlightDestination</span>
+            </li>
+            <li class="list-group-item px-0 d-flex justify-content-between">
+                <span class="text-secondary">Departure</span>
+                <span class="fw-semibold">@Model.DateDeparture.ToString("yyyy-MM-dd")</span>
+            </li>
+            <li class="list-group-item px-0 d-flex justify-content-between">
+                <span class="text-secondary">Duration</span>
+                <span class="fw-semibold">@Model.HourDuration h @Model.MinuteDuration m</span>
+            </li>
+            <li class="list-group-item px-0 d-flex justify-content-between">
+                <span class="text-secondary">Seats (max)</span>
+                <span class="fw-semibold">@Model.MaxSeats</span>
+            </li>
+            <li class="list-group-item px-0 d-flex justify-content-between">
+                <span class="text-secondary">Price</span>
+                <span class="fw-semibold">@Model.Price EUR</span>
+            </li>
+            <li class="list-group-item px-0 d-flex justify-content-between">
+                <span class="text-secondary">Class</span>
+                <span class="fw-semibold">@Model.Class</span>
+            </li>
+        </ul>
+
+        <div class="d-flex justify-content-center gap-2">
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary">Edit</a>
+            <a asp-action="Index" class="btn btn-outline-secondary">Back to List</a>
+        </div>
+    </div>
+</div>

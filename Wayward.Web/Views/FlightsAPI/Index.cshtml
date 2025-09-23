@@ -1,0 +1,95 @@
+﻿@model List<Wayward.Domain.DTO.FlightDTO>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Browse Flights";
+    string origin = ViewBag.Origin as string ?? "";
+    string dateVal = (ViewBag.DepartureDate is DateOnly d) ? d.ToString("yyyy-MM-dd") : "";
+}
+
+<h2 class="mb-3">Browse Flights</h2>
+
+<form method="get" class="row g-3 mb-4">
+    <div class="col-md-3">
+        <label class="form-label">Origin (IATA)</label>
+        <input class="form-control" name="origin" value="@(ViewBag.Origin ?? "")" placeholder="e.g., PAR" />
+    </div>
+    <div class="col-md-3 align-self-end">
+        <button class="btn btn-primary">Search</button>
+    </div>
+</form>
+
+@if (TempData["Success"] is string ok)
+{
+    <div class="alert alert-success">@ok</div>
+}
+@if (TempData["Error"] is string err)
+{
+    <div class="alert alert-warning">@err</div>
+}
+
+@if (Model != null && Model.Count > 0)
+{
+    <form asp-action="Upload" asp-controller="FlightsAPI" method="post">
+        @Html.AntiForgeryToken()
+
+        <div class="d-flex justify-content-end mb-2">
+            <button type="submit" class="btn btn-success">Upload to database</button>
+        </div>
+
+        <div class="row g-3">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var f = Model[i];
+
+                <input type="hidden" name="flights[@i].Type" value="@f.Type" />
+                <input type="hidden" name="flights[@i].Origin" value="@f.Origin" />
+                <input type="hidden" name="flights[@i].Destination" value="@f.Destination" />
+                <input type="hidden" name="flights[@i].DepartureDate" value="@f.DepartureDate" />
+                <input type="hidden" name="flights[@i].ReturnDate" value="@f.ReturnDate" />
+                <input type="hidden" name="flights[@i].Price.Total" value="@f.Price?.Total" />
+
+                <div class="col-12">
+
+                        <div class=" bg-white border border-2 p-3 py-4", style="border-radius:30px;">
+
+                            <h3 class="h6 mb-3 ps-5">
+                                @f.Origin <span class="text-secondary">→</span> @f.Destination
+                            </h3>
+
+                            <div class="row gy-2 ps-5">
+                                <div class="col-3">
+                                    <div class="small text-secondary">Departure</div>
+                                    <div class="fw-semibold">@f.DepartureDate</div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="small text-secondary">Return</div>
+                                    <div class="fw-semibold">@f.ReturnDate</div>
+                                </div>
+                                <div class="col-3">
+                                    <div class="small text-secondary">Total Price</div>
+                                    <div class="fw-semibold">@((f.Price?.Total) ?? "-") EUR</div>
+                                </div>
+                                <div class="col-3">
+                                <div class="badge  text-success font-monospace border text-4xl">@((f.Price?.Total) ?? "-") EUR</div>
+
+                                </div>
+
+                            </div>
+
+                    </div>
+
+
+               </div>
+            }
+        </div>
+    </form>
+}
+else if (!string.IsNullOrWhiteSpace(origin) && Model.Count == 0)
+{
+    <div class="alert alert-info">No results found for your criteria.</div>
+}
+else
+{
+    <div class="text-muted">Enter filters and search.</div>
+}

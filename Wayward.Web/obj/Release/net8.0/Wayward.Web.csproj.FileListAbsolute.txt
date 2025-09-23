@@ -1,0 +1,8 @@
+C:\Users\Edon Fetaji\Desktop\WayWard\Wayward.Web\obj\Release\net8.0\Wayward.Web.csproj.AssemblyReference.cache
+C:\Users\Edon Fetaji\Desktop\WayWard\Wayward.Web\obj\Release\net8.0\Wayward.Web.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Edon Fetaji\Desktop\WayWard\Wayward.Web\obj\Release\net8.0\Wayward.Web.AssemblyInfoInputs.cache
+C:\Users\Edon Fetaji\Desktop\WayWard\Wayward.Web\obj\Release\net8.0\Wayward.Web.AssemblyInfo.cs
+C:\Users\Edon Fetaji\Desktop\WayWard\Wayward.Web\obj\Release\net8.0\Wayward.Web.csproj.CoreCompileInputs.cache
+C:\Users\Edon Fetaji\Desktop\WayWard\Wayward.Web\obj\Release\net8.0\Wayward.Web.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\Edon Fetaji\Desktop\WayWard\Wayward.Web\obj\Release\net8.0\Wayward.Web.RazorAssemblyInfo.cache
+C:\Users\Edon Fetaji\Desktop\WayWard\Wayward.Web\obj\Release\net8.0\Wayward.Web.RazorAssemblyInfo.cs

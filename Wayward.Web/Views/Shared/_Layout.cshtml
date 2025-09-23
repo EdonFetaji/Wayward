@@ -1,0 +1,195 @@
+﻿@*
+  /Views/Shared/_Layout.cshtml
+  Bluish modern theme for Wayward (.NET MVC)
+*@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Wayward</title>
+
+    <!-- Local Bootstrap + your site styles -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Wayward.Web.styles.css" asp-append-version="true" />
+
+    <style>
+        /* --- Quick bluish theme (move to site.css if you wish) --- */
+        :root {
+            --wwd-primary-700: #1e40af; /* indigo-800 */
+            --wwd-primary-600: #2563eb; /* blue-600  */
+            --wwd-primary-500: #3b82f6; /* blue-500  */
+            --wwd-bg-soft: #f5f8ff;
+            --wwd-border: #e7ecff;
+        }
+
+        .navbar-wwd {
+            background: linear-gradient(90deg, var(--wwd-primary-700), var(--wwd-primary-600) 50%, var(--wwd-primary-500));
+        }
+
+            .navbar-wwd .navbar-brand,
+            .navbar-wwd .nav-link,
+            .navbar-wwd .navbar-text {
+                color: #eaf1ff;
+            }
+
+                .navbar-wwd .nav-link:hover,
+                .navbar-wwd .navbar-brand:hover {
+                    color: #ffffff;
+                }
+
+        .btn-wwd-ghost {
+            color: #eaf1ff;
+            border-color: rgba(255,255,255,.35);
+        }
+
+            .btn-wwd-ghost:hover {
+                color: #0b1020;
+                background: #ffffff;
+                border-color: #ffffff;
+            }
+
+        body {
+            background: var(--wwd-bg-soft);
+        }
+
+        .page-shell {
+            background: #fff;
+            border: 1px solid var(--wwd-border);
+            border-radius: .75rem;
+            box-shadow: 0 10px 30px rgba(30,64,175,.08);
+        }
+
+        footer.footer-wwd {
+            background: linear-gradient(180deg, #0f172a, #0b1020);
+        }
+
+        .footer-wwd, .footer-wwd a {
+            color: #c7d2fe;
+        }
+
+            .footer-wwd a:hover {
+                color: #ffffff;
+            }
+    </style>
+</head>
+<body>
+    <header class="sticky-top">
+
+        <nav class="navbar navbar-expand-lg navbar-wwd shadow-sm px-5 py-2">
+            <div class="container-xxl">
+                <a class="navbar-brand fw-semibold d-flex align-items-center gap-2" asp-area="" asp-controller="Home" asp-action="Index">
+
+                    <div class="rounded-circle bg-white p-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="44px" viewBox="0 -960 960 960" width="48px"
+                             fill="#1f1f1f">
+                            <path d="M285-80v-83l124-86v-172L80-288v-102l329-231v-188q0-29 21-50t50-21q29 0 50 21t21 50v188l329 231v102L551-421v172l123 86v83l-194-59-195 59Z" />
+                        </svg>
+                    </div>
+                    <span class="ps-1 text-3xl">Wayward</span>
+                </a>
+
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                        aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon" style="filter: invert(1);"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="mainNav">
+                    <ul class="navbar-nav ms-lg-3 me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Flights" asp-action="Index">Flights</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="WishLists" asp-action="Index">WishList</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Bookings" asp-action="Index">Bookings</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="FlightsAPI" asp-action="Index">Browse Flights</a>
+                        </li>
+                    </ul>
+
+                    <div class="d-flex align-items-center gap-2 text-white">
+                        <partial name="_LoginPartial" />
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- MAIN CONTENT WRAPPER -->
+
+        <main role="main" class="p-5 w-2">
+            @RenderBody()
+        </main>
+
+
+    @* <!-- FOOTER --> *@
+    @* <footer class="footer-wwd mt-5 pt-5 pb-4"> *@
+    @*     <div class="container-xxl"> *@
+    @*         <div class="row g-4"> *@
+    @*             <div class="col-12 col-md-6"> *@
+    @*                 <h6 class="text-uppercase fw-semibold mb-3" style="letter-spacing:.08em;">Wayward</h6> *@
+    @*                 <p class="mb-2 small">A .NET MVC flight-booking app using Onion Architecture.</p> *@
+    @*                 <p class="mb-0 small">Amadeus search · Stripe checkout · Gmail confirmations · QuestPDF boarding passes.</p> *@
+    @*             </div> *@
+    @*             <div class="col-6 col-md-3"> *@
+    @*                 <h6 class="fw-semibold mb-3">Product</h6> *@
+    @*                 <ul class="list-unstyled small mb-0"> *@
+    @*                     <li><a asp-controller="FlightsAPI" asp-action="Index" class="text-decoration-none">Browse Flights</a></li> *@
+    @*                     <li><a asp-controller="WishLists" asp-action="Index" class="text-decoration-none">WishList</a></li> *@
+    @*                     <li><a asp-controller="Bookings" asp-action="Index" class="text-decoration-none">Bookings</a></li> *@
+    @*                 </ul> *@
+    @*             </div> *@
+    @*             <div class="col-6 col-md-3"> *@
+    @*                 <h6 class="fw-semibold mb-3">Legal</h6> *@
+    @*                 <ul class="list-unstyled small mb-0"> *@
+    @*                     <li><a asp-area="" asp-controller="Home" asp-action="Privacy" class="text-decoration-none">Privacy</a></li> *@
+    @*                     <li><a href="#" class="text-decoration-none">Terms</a></li> *@
+    @*                     <li><a href="#" class="text-decoration-none">Imprint</a></li> *@
+    @*                 </ul> *@
+    @*             </div> *@
+    @*         </div> *@
+
+    @*         <hr class="border-light-subtle my-4" /> *@
+
+    @*         <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center small"> *@
+    @*             <div class="mb-2 mb-md-0">&copy; 2025 Wayward</div> *@
+    @*             <div class="text-secondary">Built with Bootstrap · .NET MVC</div> *@
+    @*         </div> *@
+    @*     </div> *@
+    @* </footer> *@
+
+    <!-- FOOTER -->
+    <footer class="border-top py-4">
+        <div class="container">
+            <div class="row gy-4 align-items-center">
+                <div class="col-md-6">
+                    <div class="small text-secondary">© 2025 Wayward. All rights reserved.</div>
+                    <div class="small text-secondary">Built with .NET MVC & Onion Architecture.</div>
+                </div>
+                <div class="col-md-6">
+                    <ul class="nav justify-content-md-end">
+                        <li class="nav-item"><a class="nav-link px-2 small" href="#">Imprint</a></li>
+                        <li class="nav-item"><a class="nav-link px-2 small" href="#">Privacy</a></li>
+                        <li class="nav-item"><a class="nav-link px-2 small" href="#">Terms</a></li>
+                        <li class="nav-item"><a class="nav-link px-2 small" href="#">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Local scripts -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

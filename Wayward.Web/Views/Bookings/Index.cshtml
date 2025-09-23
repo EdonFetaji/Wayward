@@ -1,0 +1,91 @@
+﻿@model IEnumerable<Wayward.Domain.DomainModels.Booking>
+
+@{
+    ViewData["Title"] = "Bookings";
+}
+
+<div class="container py-4">
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-info">No bookings found.</div>
+    }
+    else
+    {
+        foreach (var b in Model)
+        {
+            var flights = b.BookedFlights ?? new List<Wayward.Domain.DomainModels.BookedFlight>();
+            var collapseId = $"bf_{b.Id:N}";
+            var total = flights.Sum(x => (double?)x.Flight?.Price ?? 0);
+            <div class="card shadow-sm mb-3">
+                <div class="card-body">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center">
+                        <div class="mb-2 mb-sm-0">
+                            <div class="small text-secondary">Booking ID</div>
+                            <div class="text-monospace">@b.Id</div>
+                        </div>
+
+                        <div class="d-flex align-items-center gap-2">
+                            <span class="badge bg-secondary">@flights.Count</span>
+                            @if (flights.Any())
+                            {
+                                <button class="btn btn-sm btn-outline-secondary"
+                                        type="button"
+                                        data-bs-toggle="collapse"
+                                        data-bs-target="#@collapseId"
+                                        aria-expanded="false"
+                                        aria-controls="@collapseId">
+                                    View flights
+                                </button>
+                            }
+                            <a asp-action="Details" asp-route-id="@b.Id" class="btn btn-sm btn-outline-primary">Details</a>
+                        </div>
+                    </div>
+
+                    @if (flights.Any())
+                    {
+                        <div id="@collapseId" class="collapse mt-3">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-hover align-middle mb-0">
+                                    <thead class="table-light">
+                                        <tr>
+                                            <th>Flight</th>
+                                            <th>Route</th>
+                                            <th>Date</th>
+                                            <th>Class</th>
+                                            <th>Price</th>
+                                            <th>Seat</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var bf in flights)
+                                        {
+                                            var f = bf.Flight;
+                                            <tr>
+                                                <td>@f?.AirlineName</td>
+                                                <td>@f?.FlightDeparture → @f?.FlightDestination</td>
+                                                <td>@(f?.DateDeparture.ToString("yyyy-MM-dd"))</td>
+                                                <td>@f?.Class</td>
+                                                <td>@f?.Price</td>
+                                                <td>@(bf.Seat?.SeatNumber.ToString() ?? "—")</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="card-footer d-flex justify-content-between align-items-center">
+                    <div class="small text-secondary">Booking total</div>
+                    <div class="fw-semibold">@total.ToString("0.##") EUR</div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
