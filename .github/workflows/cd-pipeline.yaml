@@ -1,0 +1,139 @@
+name: EC2 Docker-Compose Deploy (.NET)
+
+on:
+  workflow_dispatch:
+    branches:
+      - main
+
+jobs:
+  aws_instance_prep:
+    runs-on: ubuntu-latest
+    outputs:
+      instance_id: ${{ steps.set_env.outputs.instance_id }}
+      public_ip:   ${{ steps.get_ip.outputs.public_ip }}
+
+    steps:
+      - name: Configure AWS Credentials (CLI)
+        run: |
+          aws configure set aws_access_key_id     "${{ secrets.AWS_ACCESS_KEY_ID }}"
+          aws configure set aws_secret_access_key "${{ secrets.AWS_SECRET_ACCESS_KEY }}"
+          aws configure set default.region        "${{ secrets.AWS_REGION }}"
+
+      - name: Check for existing EC2 instance
+        id: check_instance
+        run: |
+          INSTANCE_ID=$(aws ec2 describe-instances \
+            --filters "Name=tag:Name,Values=wayward-ec2" "Name=instance-state-name,Values=running" \
+            --query "Reservations[0].Instances[0].InstanceId" \
+            --output text)
+
+          if [[ "$INSTANCE_ID" == "None" ]]; then
+            echo "EXISTING_INSTANCE=false" >> $GITHUB_ENV
+          else
+            echo "EXISTING_INSTANCE=true"  >> $GITHUB_ENV
+            echo "INSTANCE_ID=$INSTANCE_ID" >> $GITHUB_ENV
+          fi
+
+      - name: Launch EC2 instance if needed (from Launch Template)
+        if: env.EXISTING_INSTANCE == 'false'
+        run: |
+          INSTANCE_ID=$(aws ec2 run-instances \
+            --launch-template LaunchTemplateId=${{ secrets.EC2_LAUNCH_TEMPLATE_ID }} \
+            --tag-specifications "ResourceType=instance,Tags=[{Key=Name,Value=wayward-ec2}]" \
+            --query 'Instances[0].InstanceId' \
+            --output text)
+          echo "INSTANCE_ID=$INSTANCE_ID" >> $GITHUB_ENV
+
+      - name: Wait for instance to be ready
+        run: |
+          aws ec2 wait instance-status-ok --instance-ids "${{ env.INSTANCE_ID }}"
+
+      - name: Get EC2 Public IP
+        id: get_ip
+        run: |
+          PUBLIC_IP=$(aws ec2 describe-instances \
+            --instance-ids "${{ env.INSTANCE_ID }}" \
+            --query "Reservations[0].Instances[0].PublicIpAddress" \
+            --output text)
+          echo "public_ip=$PUBLIC_IP" >> $GITHUB_OUTPUT
+
+      - name: Set instance ID output
+        id: set_env
+        run: echo "instance_id=${{ env.INSTANCE_ID }}" >> $GITHUB_OUTPUT
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: aws_instance_prep
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup SSH key
+        run: |
+          echo "${{ secrets.EC2_SSH_PRIVATE_KEY }}" > ec2_key.pem
+          chmod 600 ec2_key.pem
+
+      - name: Copy ONLY docker-compose.yml to EC2
+        run: |
+          scp -i ec2_key.pem -o StrictHostKeyChecking=no docker-compose.yml ec2-user@${{ needs.aws_instance_prep.outputs.public_ip }}:/home/ec2-user/docker-compose.yml
+
+      - name: Write .env on EC2 from GitHub Secrets (full list)
+        run: |
+          ssh -i ec2_key.pem -o StrictHostKeyChecking=no ec2-user@${{ needs.aws_instance_prep.outputs.public_ip }} "bash -s" <<'EOF'
+          set -euo pipefail
+          cd /home/ec2-user
+
+          cat > .env <<EOV
+# MySQL
+MYSQL_ROOT_PASSWORD=${{ secrets.MYSQL_ROOT_PASSWORD }}
+MYSQL_DATABASE=${{ secrets.MYSQL_DATABASE }}
+MYSQL_USER=root
+DB_PORT=${{ secrets.DB_PORT }}
+MYSQL_ROOT_HOST=%
+
+# Web/App
+WEB_PORT=${{ secrets.WEB_PORT }}
+
+# SMTP
+SMTP_SERVER=${{ secrets.SMTP_SERVER }}
+SMTP_PORT=${{ secrets.SMTP_PORT }}
+SMTP_USE_SSL=${{ secrets.SMTP_USE_SSL }}
+SMTP_USERNAME=${{ secrets.SMTP_USERNAME }}
+SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }}
+SMTP_FROM=${{ secrets.SMTP_FROM }}
+SMTP_FROM_NAME=${{ secrets.SMTP_FROM_NAME }}
+
+# Stripe
+STRIPE_PUBLISHABLE_KEY=${{ secrets.STRIPE_PUBLISHABLE_KEY }}
+STRIPE_SECRET_KEY=${{ secrets.STRIPE_SECRET_KEY }}
+
+# Amadeus
+AMADEUS_CLIENT_ID=${{ secrets.AMADEUS_CLIENT_ID }}
+AMADEUS_CLIENT_SECRET=${{ secrets.AMADEUS_CLIENT_SECRET }}
+EOV
+          EOF
+
+      - name: Deploy with docker compose (using .env)
+        run: |
+          ssh -i ec2_key.pem -o StrictHostKeyChecking=no ec2-user@${{ needs.aws_instance_prep.outputs.public_ip }} "bash -s" <<'EOF'
+          set -euo pipefail
+          cd /home/ec2-user
+
+          if command -v docker compose >/dev/null 2>&1; then
+            COMPOSE="docker compose"
+          else
+            COMPOSE="docker-compose"
+          fi
+
+          $COMPOSE --env-file .env down || true
+          $COMPOSE --env-file .env up -d
+          $COMPOSE ps
+          EOF
+
+      - name: Print Public URL
+        run: |
+          echo "====================================================="
+          echo "✅ Deployed to EC2"
+          echo "🌍 Web:  http://${{ needs.aws_instance_prep.outputs.public_ip }}:${{ secrets.WEB_PORT }}"
+          echo "====================================================="
