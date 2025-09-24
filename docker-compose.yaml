@@ -16,13 +16,12 @@ services:
       retries: 10
 
   web:
-    image: edon505/wayward-air:latest
+    image: edon505/wayward-son:latest
     depends_on:
       db:
         condition: service_healthy
     environment:
       - ASPNETCORE_URLS=http://+:8080
-      - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Server=db;Port=${DB_PORT};Database=${MYSQL_DATABASE};User=${MYSQL_USER};Password=${MYSQL_ROOT_PASSWORD};SslMode=none;AllowPublicKeyRetrieval=true
       - EmailSettings__SmtpServer=${SMTP_SERVER}
       - EmailSettings__SmtpPort=${SMTP_PORT}
